@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>塔塔的 AI 情报</title>
+    <atom:link href="https://qqttyst.github.io/daily-ai-briefing/feed.xml" rel="self" type="application/rss+xml"/>
+    <link>https://qqttyst.github.io/daily-ai-briefing/</link>
+    <description>每天早上 9:30，一份说人话的 AI 行业情报语音版：政策、资本、技术、大厂动态，10 分钟以内听完。</description>
+    <language>zh-CN</language>
+    <itunes:image href="https://qqttyst.github.io/daily-ai-briefing/cover.png"/>
+    <itunes:category text="Technology"/>
+    <itunes:explicit>false</itunes:explicit>
+    <item>
+      <title>每日 AI 情报 · 9月26日</title>
+      <description><![CDATA[9 月 26 日 AI 情报：人社部 AI 行业招聘专场、黄仁勋谈对华出售 Blackwell、英伟达与 OpenAI 相关动态等。]]></description>
+      <pubDate>Sat, 26 Sep 2026 01:30:00 +0000</pubDate>
+      <enclosure url="https://qqttyst.github.io/daily-ai-briefing/audio/ai-926-2026-09-26.mp3" length="6871092" type="audio/mpeg"/>
+      <guid isPermaLink="false">ai-926-2026-09-26</guid>
+      <itunes:duration>429</itunes:duration>
+    </item>
+  </channel>
+</rss>
