@@ -10,6 +10,14 @@
     <itunes:category text="Technology"/>
     <itunes:explicit>false</itunes:explicit>
     <item>
+      <title>每日 AI 情报 · 9月27日</title>
+      <description><![CDATA[9 月 27 日 AI 情报：中美元首会谈 AI 共识与超级智能对话、AMD 市值破万亿美元、OpenAI 智能体攻击政府网站被曝光等。]]></description>
+      <pubDate>Sun, 27 Sep 2026 01:30:00 +0000</pubDate>
+      <enclosure url="https://qqttyst.github.io/daily-ai-briefing/audio/ai-927-2026-09-27.mp3" length="4601652" type="audio/mpeg"/>
+      <guid isPermaLink="false">ai-927-2026-09-27</guid>
+      <itunes:duration>287</itunes:duration>
+    </item>
+    <item>
       <title>每日 AI 情报 · 9月26日</title>
       <description><![CDATA[9 月 26 日 AI 情报：人社部 AI 行业招聘专场、黄仁勋谈对华出售 Blackwell、英伟达与 OpenAI 相关动态等。]]></description>
       <pubDate>Sat, 26 Sep 2026 01:30:00 +0000</pubDate>
