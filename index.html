@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>塔塔的 AI 情报</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+         background: #f4f1ea; color: #2b2b2b; margin: 0; padding: 24px 16px 64px; }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 20px; }
+  header img { width: 120px; height: 120px; border-radius: 24px; box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+  h1 { font-size: 26px; margin: 14px 0 6px; }
+  .sub { color: #777; font-size: 14px; margin: 0 0 14px; }
+  .rss-row { display: flex; gap: 8px; justify-content: center; align-items: center; margin-bottom: 8px; }
+  .rss-row code { font-size: 12px; color: #888; word-break: break-all; }
+  button { background: #2b2b2b; color: #fff; border: 0; border-radius: 999px;
+           padding: 8px 18px; font-size: 14px; cursor: pointer; }
+  button:active { transform: scale(.97); }
+  #player { width: 100%; margin: 12px 0 4px; }
+  #now { text-align: center; font-size: 14px; color: #555; min-height: 20px; margin-bottom: 12px; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { background: #fff; border-radius: 14px; padding: 14px 16px; margin-bottom: 10px;
+       display: flex; justify-content: space-between; align-items: center; gap: 10px;
+       box-shadow: 0 1px 4px rgba(0,0,0,.06); cursor: pointer; }
+  li:hover { background: #faf8f3; }
+  li.playing { outline: 2px solid #2b2b2b; }
+  .t { font-size: 15px; font-weight: 600; }
+  .d { font-size: 12px; color: #999; margin-top: 4px; }
+  .play { font-size: 20px; flex-shrink: 0; }
+  .loading { text-align: center; color: #999; padding: 40px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="cover.png" alt="塔塔的 AI 情报封面">
+    <h1>塔塔的 AI 情报</h1>
+    <p class="sub">每天早上 9:30，一份说人话的 AI 行业情报语音版</p>
+    <div class="rss-row">
+      <button id="copyRss">复制 RSS 订阅链接</button>
+    </div>
+  </header>
+  <audio id="player" controls preload="none"></audio>
+  <div id="now"></div>
+  <ul id="list"><li class="loading">节目加载中…</li></ul>
+</div>
+<script>
+const ITUNES_NS = "http://www.itunes.com/dtds/podcast-1.0.dtd";
+const RSS_URL = "https://qqttyst.github.io/daily-ai-briefing/feed.xml";
+
+function fmtDur(sec) {
+  sec = parseInt(sec, 10) || 0;
+  const m = Math.floor(sec / 60), s = sec % 60;
+  return m + "分" + (s < 10 ? "0" : "") + s + "秒";
+}
+function fmtDate(pubDate) {
+  const d = new Date(pubDate);
+  if (isNaN(d)) return "";
+  return (d.getMonth() + 1) + "月" + d.getDate() + "日";
+}
+function tagNS(item, ns, name) {
+  const els = item.getElementsByTagNameNS(ns, name);
+  return els.length ? els[0].textContent : "";
+}
+
+fetch("feed.xml").then(r => {
+  if (!r.ok) throw new Error("feed 加载失败");
+  return r.text();
+}).then(text => {
+  const xml = new DOMParser().parseFromString(text, "application/xml");
+  const items = [...xml.getElementsByTagName("item")];
+  const list = document.getElementById("list");
+  const player = document.getElementById("player");
+  const now = document.getElementById("now");
+  list.innerHTML = "";
+  if (!items.length) {
+    list.innerHTML = '<li class="loading">暂无节目</li>';
+    return;
+  }
+  items.forEach(it => {
+    const title = it.getElementsByTagName("title")[0].textContent;
+    const enc = it.getElementsByTagName("enclosure")[0];
+    const url = enc.getAttribute("url");
+    const dur = tagNS(it, ITUNES_NS, "duration");
+    const pub = it.getElementsByTagName("pubDate")[0].textContent;
+    const li = document.createElement("li");
+    li.innerHTML = '<div><div class="t"></div><div class="d"></div></div><div class="play">▶</div>';
+    li.querySelector(".t").textContent = title;
+    li.querySelector(".d").textContent = fmtDate(pub) + " · " + fmtDur(dur);
+    li.addEventListener("click", () => {
+      document.querySelectorAll("li.playing").forEach(e => {
+        e.classList.remove("playing");
+        e.querySelector(".play").textContent = "▶";
+      });
+      li.classList.add("playing");
+      li.querySelector(".play").textContent = "⏸";
+      now.textContent = "正在播放：" + title;
+      if (player.src !== url) player.src = url;
+      player.play();
+    });
+    list.appendChild(li);
+  });
+  player.addEventListener("pause", () => {
+    document.querySelectorAll("li.playing .play").forEach(e => e.textContent = "▶");
+  });
+}).catch(e => {
+  document.getElementById("list").innerHTML = '<li class="loading">加载失败，请稍后重试</li>';
+});
+
+document.getElementById("copyRss").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(RSS_URL);
+    alert("RSS 链接已复制，粘贴到播客 App 即可订阅");
+  } catch (e) {
+    prompt("复制下面的 RSS 链接：", RSS_URL);
+  }
+});
+</script>
+</body>
+</html>
