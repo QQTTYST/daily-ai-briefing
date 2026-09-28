@@ -25,5 +25,13 @@
       <guid isPermaLink="false">ai-926-2026-09-26</guid>
       <itunes:duration>429</itunes:duration>
     </item>
+    <item>
+      <title>每日 AI 情报 · 9月28日</title>
+      <description><![CDATA[开放人工智能暂停最强模型训练、国会加码芯片管制、国产编程模型上线、首部AI电影定档等9月27日AI行业重要资讯]]></description>
+      <pubDate>Mon, 28 Sep 2026 01:30:00 +0000</pubDate>
+      <enclosure url="https://qqttyst.github.io/daily-ai-briefing/audio/ai-928-2026-09-28.mp3" length="13534893" type="audio/mpeg"/>
+      <guid isPermaLink="false">ai-928-2026-09-28</guid>
+      <itunes:duration>846</itunes:duration>
+    </item>
   </channel>
 </rss>
